@@ -46,12 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Micropost::class);
     }
-    /**
-     * このユーザーに関係するモデルの件数をロードする。
-     */
+    
     public function loadRelationshipCounts()
     {
-        $this->loadCount('microposts');
+        $this->loadCount(['microposts', 'followings', 'followers']);
     }
     //下からuser2userの関係を定義する
 
@@ -100,7 +98,7 @@ class User extends Authenticatable
     {
         $exist = $this->is_following($userId);
         $its_me = $this->id == $userId;
-        
+        //フォロー中であることと自分と違うことを判定してから処理を実行する
         if ($exist && !$its_me) {
             $this->followings()->detach($userId);
             return true;
