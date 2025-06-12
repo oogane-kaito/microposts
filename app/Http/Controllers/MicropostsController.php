@@ -38,7 +38,7 @@ class MicropostsController extends Controller
         ]);
         
         // 認証済みユーザー（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
-        $request->user()->feed_microposts()->create([
+        $request->user()->microposts()->create([
             'content' => $request->content,
         ]);
         
