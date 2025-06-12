@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check())
+    @if (Auth::check()) 
         <div class="sm:grid sm:grid-cols-3 sm:gap-10">
             <aside class="mt-4">
                 {{-- ユーザー情報 --}}
@@ -14,7 +14,7 @@
                 @include('microposts.microposts')
             </div>
         </div>
-    @else
+    @else 
         <div class="prose hero bg-base-200 mx-auto max-w-full rounded">
             <div class="hero-content text-center my-10">
                 <div class="max-w-md mb-10">

@@ -1,7 +1,7 @@
 <div class="mt-4">
-    @if (isset($microposts))
+    @if (isset($favorites))
         <ul class="list-none">
-            @foreach ($microposts as $micropost)
+            @foreach ($favorites as $micropost)
                 <li class="flex items-start gap-x-2 mb-4">
                     {{-- 投稿の所有者のメールアドレスをもとにGravatarを取得して表示 --}}
                     <div class="avatar">
@@ -21,16 +21,16 @@
                         </div>
                         <div>
                             @if (Auth::id() == $micropost->user_id)
-                                    {{-- 投稿削除ボタンのフォーム --}}
-                                    <form method="POST" action="{{ route('microposts.destroy', $micropost->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-error btn-sm normal-case" 
-                                            onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
-                                    </form>
-                                
+                                {{-- 投稿削除ボタンのフォーム --}}
+                                <form method="POST" action="{{ route('microposts.destroy', $micropost->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-error btn-sm normal-case" 
+                                        onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
+                                </form>
                             @endif
                             @if (Auth::user()->id !== $micropost->user_id)
+                            
                                 @if (Auth::user()->favorites()->where('microposts_id', $micropost->id)->exists())
                                     {{-- お気に入り解除ボタン --}}
                                     <form method="POST" action="{{ route('favorites.unfavorite', $micropost->id) }}">
@@ -46,7 +46,9 @@
                                         <button type="submit" class="btn btn-primary btn-sm normal-case">お気に入り追加</button>
                                     </form>
                                 @endif
+
                             @endif
+                            
                         </div>
                         
                     </div>
@@ -54,6 +56,6 @@
             @endforeach
         </ul>
         {{-- ページネーションのリンク --}}
-        {{ $microposts->links() }}
+        {{ $favorites->links() }}
     @endif
 </div>
